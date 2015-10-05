@@ -5,8 +5,8 @@ var buildEnv = process.env.BUILD || 'dev';
 
 module.exports = {
   entry: {
-    lib: './src/index.js',
-    test: './test/index.js'
+    //lib: './src/index.js',
+    test: './test.js'
   },
   output: {
     filename: '[name].js',
@@ -18,11 +18,9 @@ module.exports = {
     ],
     extensions: ['', '.js']
   },
-  watch: true,
   module: {
     loaders: [
-      { test: /src\/.*\.js$/, loader: 'babel?stage=2', exclude: /node_modules/ },
-      { test: /test\/.*\.js$/, loader: 'babel?stage=2' }
+      { test: /\.js$/, loader: 'babel?stage=2', exclude: /node_modules/ },
     ]
   },
   plugins: [new webpack.HotModuleReplacementPlugin()]

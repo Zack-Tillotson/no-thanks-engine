@@ -1,5 +1,2 @@
-export default {
-  test() {
-    return "hai er'rybody!";
-  }
-}
+import Engine from './engine';
+export default Engine;
