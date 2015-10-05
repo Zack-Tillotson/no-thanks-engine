@@ -5,8 +5,8 @@ var buildEnv = process.env.BUILD || 'dev';
 
 module.exports = {
   entry: {
-    //lib: './src/index.js',
-    test: './test.js'
+    lib: './src/index.js'
+    //test: './test.js'
   },
   output: {
     filename: '[name].js',
@@ -17,6 +17,9 @@ module.exports = {
       __dirname
     ],
     extensions: ['', '.js']
+  },
+  node: {
+    fs: "empty"
   },
   module: {
     loaders: [
