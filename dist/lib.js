@@ -64,7 +64,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "dc18ef71004df67cea59"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "6bc284b422a97fa61d69"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -630,7 +630,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var deck = action === Actions.NoThanks ? state.deck : _deck2['default'].drawCard(state.deck);
 
-	    var table = action === Actions.NoThanks ? _table2['default'].dumpPot(state.table) : _table2['default'].resetPot(state.table);
+	    var table = action === Actions.NoThanks ? _table2['default'].bumpPot(state.table) : _table2['default'].takePot(state.table);
 
 	    var game = getGameState(deck);
 
@@ -728,11 +728,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    list[players.currentPlayer] = updatedPlayer;
 
 	    return {
-	      currentPlayer: (players.currentPlayer + 1) % player.list,
+	      currentPlayer: (players.currentPlayer + 1) % list.length,
 	      list: list
 	    };
 	  },
-	  takeCard: function takeCard(state, card, pot) {
+	  takeCard: function takeCard(players, card, pot) {
 	    var list = players.list.slice(0);
 	    var currentPlayer = list[players.currentPlayer];
 
@@ -740,7 +740,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    list[players.currentPlayer] = updatedPlayer;
 
 	    return {
-	      currentPlayer: (players.currentPlayer + 1) % player.list,
+	      currentPlayer: (players.currentPlayer + 1) % list.length,
 	      list: list
 	    };
 	  }

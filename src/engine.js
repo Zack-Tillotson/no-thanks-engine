@@ -39,8 +39,8 @@ export default {
     const deck = (action === Actions.NoThanks) ? state.deck : Deck.drawCard(state.deck);
 
     const table = (action === Actions.NoThanks) 
-      ? Table.dumpPot(state.table) 
-      : Table.resetPot(state.table);
+      ? Table.bumpPot(state.table) 
+      : Table.takePot(state.table);
 
     const game = getGameState(deck);
 

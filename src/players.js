@@ -38,11 +38,11 @@ export default {
     list[players.currentPlayer] = updatedPlayer;
 
     return {
-      currentPlayer: (players.currentPlayer + 1) % player.list,
+      currentPlayer: (players.currentPlayer + 1) % list.length,
       list
     }
   },
-  takeCard(state, card, pot) {
+  takeCard(players, card, pot) {
     const list = players.list.slice(0);
     const currentPlayer = list[players.currentPlayer];
 
@@ -50,7 +50,7 @@ export default {
     list[players.currentPlayer] = updatedPlayer;
 
     return {
-      currentPlayer: (players.currentPlayer + 1) % player.list,
+      currentPlayer: (players.currentPlayer + 1) % list.length,
       list
     }
   }
