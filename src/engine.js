@@ -4,6 +4,11 @@ import Deck from './deck';
 import Players from './players';
 import Table from './table';
 
+const Actions = {
+  NoThanks: 'noThanks',
+  Take: 'take'
+};
+
 function getGameState(deck) {
   return {
     ongoing: deck.length > 0
@@ -22,7 +27,7 @@ export default {
 
   },
 
-  resolveActions(state, action) {
+  resolveAction(state, action) {
 
     const card = state.deck.topCard;
     const pot = state.table.pot;
