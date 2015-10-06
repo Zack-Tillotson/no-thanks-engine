@@ -29,7 +29,7 @@ export default {
 
   resolveAction(state, action) {
 
-    const card = state.deck.topCard;
+    const card = state.deck[0];
     const pot = state.table.pot;
 
     const players = (action === Actions.NoThanks)

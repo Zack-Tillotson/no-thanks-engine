@@ -64,7 +64,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0c1475913602611a090e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d3129469cb047e6f47c7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -623,7 +623,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  resolveAction: function resolveAction(state, action) {
 
-	    var card = state.deck.topCard;
+	    var card = state.deck[0];
 	    var pot = state.table.pot;
 
 	    var players = action === Actions.NoThanks ? _players2['default'].noThanksCard(state.players) : _players2['default'].takeCard(state.players, card, pot);

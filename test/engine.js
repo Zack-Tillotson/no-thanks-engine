@@ -24,11 +24,13 @@ describe('Engine', function() {
   describe('resolveAction()', function() {
     it('should be callable with a take action', function() {
       var state = Engine.getInitialState(utils.getPlayerList());
-      Engine.resolveAction(state, 'take');;
+      state = Engine.resolveAction(state, 'take');
+      assert(state.players.list[0].score > -1); // Breaks on NaN
+      assert(state.players.list[1].score > -1);
     });
     it('should be callable with a no thanks action', function() {
       var state = Engine.getInitialState(utils.getPlayerList());
-      Engine.resolveAction(state, 'noThanks');;
+      state = Engine.resolveAction(state, 'noThanks');
     });
   });
 });
