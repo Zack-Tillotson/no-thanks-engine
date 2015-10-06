@@ -20,7 +20,7 @@ export default {
     const card = state.deck.topCard;
     const pot = state.table.pot;
 
-    const players = (ation === Actions.NoThanks)
+    const players = (action === Actions.NoThanks)
       ? Players.noThanksCard(state.players)
       : Players.takeCard(state.players, card, pot);
 
@@ -30,8 +30,12 @@ export default {
       ? Table.dumpPot(state.table) 
       : Table.resetPot(state.table);
 
+    const game = {
+      ongoing: deck.length > 0
+    }
 
-    return {deck, players, table};
+
+    return {deck, players, table, game};
  
   }
 }
