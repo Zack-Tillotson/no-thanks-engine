@@ -1,22 +1,70 @@
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["NoThanksEngine"] = factory();
+	else
+		root["NoThanksEngine"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	var parentHotUpdateCallback = this["webpackHotUpdateNoThanksEngine"];
+/******/ 	this["webpackHotUpdateNoThanksEngine"] = 
+/******/ 	function webpackHotUpdateCallback(chunkId, moreModules) { // eslint-disable-line no-unused-vars
+/******/ 		hotAddUpdateChunk(chunkId, moreModules);
+/******/ 		if(parentHotUpdateCallback) parentHotUpdateCallback(chunkId, moreModules);
+/******/ 	}
+/******/ 	
 /******/ 	function hotDownloadUpdateChunk(chunkId) { // eslint-disable-line no-unused-vars
-/******/ 		var chunk = require("./" + "" + chunkId + "." + hotCurrentHash + ".hot-update.js");
-/******/ 		hotAddUpdateChunk(chunk.id, chunk.modules);
+/******/ 		var head = document.getElementsByTagName("head")[0];
+/******/ 		var script = document.createElement("script");
+/******/ 		script.type = "text/javascript";
+/******/ 		script.charset = "utf-8";
+/******/ 		script.src = __webpack_require__.p + "" + chunkId + "." + hotCurrentHash + ".hot-update.js";
+/******/ 		head.appendChild(script);
 /******/ 	}
 /******/ 	
 /******/ 	function hotDownloadManifest(callback) { // eslint-disable-line no-unused-vars
+/******/ 		if(typeof XMLHttpRequest === "undefined")
+/******/ 			return callback(new Error("No browser support"));
 /******/ 		try {
-/******/ 			var update = require("./" + "" + hotCurrentHash + ".hot-update.json");
-/******/ 		} catch(e) {
-/******/ 			return callback();
+/******/ 			var request = new XMLHttpRequest();
+/******/ 			var requestPath = __webpack_require__.p + "" + hotCurrentHash + ".hot-update.json";
+/******/ 			request.open("GET", requestPath, true);
+/******/ 			request.timeout = 10000;
+/******/ 			request.send(null);
+/******/ 		} catch(err) {
+/******/ 			return callback(err);
 /******/ 		}
-/******/ 		callback(null, update);
+/******/ 		request.onreadystatechange = function() {
+/******/ 			if(request.readyState !== 4) return;
+/******/ 			if(request.status === 0) {
+/******/ 				// timeout
+/******/ 				callback(new Error("Manifest request to " + requestPath + " timed out."));
+/******/ 			} else if(request.status === 404) {
+/******/ 				// no update available
+/******/ 				callback();
+/******/ 			} else if(request.status !== 200 && request.status !== 304) {
+/******/ 				// other failure
+/******/ 				callback(new Error("Manifest request to " + requestPath + " failed."));
+/******/ 			} else {
+/******/ 				// success
+/******/ 				try {
+/******/ 					var update = JSON.parse(request.responseText);
+/******/ 				} catch(e) {
+/******/ 					callback(e);
+/******/ 					return;
+/******/ 				}
+/******/ 				callback(null, update);
+/******/ 			}
+/******/ 		};
 /******/ 	}
 
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2cd15ac170c3a04479c2"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "29d7a0f35631387ccab6"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -566,13 +614,17 @@
 	    var card = state.deck.topCard;
 	    var pot = state.table.pot;
 
-	    var players = ation === Actions.NoThanks ? _player2['default'].noThanksCard(state.players) : _player2['default'].takeCard(state.players, card, pot);
+	    var players = action === Actions.NoThanks ? _player2['default'].noThanksCard(state.players) : _player2['default'].takeCard(state.players, card, pot);
 
 	    var deck = action === Actions.NoThanks ? state.deck : _deck2['default'].drawCard(state.deck);
 
 	    var table = action === Actions.NoThanks ? _table2['default'].dumpPot(state.table) : _table2['default'].resetPot(state.table);
 
-	    return { deck: deck, players: players, table: table };
+	    var game = {
+	      ongoing: deck.length > 0
+	    };
+
+	    return { deck: deck, players: players, table: table, game: game };
 	  }
 	};
 	module.exports = exports['default'];
@@ -711,4 +763,6 @@
 	module.exports = exports["default"];
 
 /***/ }
-/******/ ]);
+/******/ ])
+});
+;

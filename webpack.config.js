@@ -10,7 +10,9 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
-    path: path.join(__dirname, 'dist')
+    path: path.join(__dirname, 'dist'),
+    libraryTarget: 'umd',
+    library: 'NoThanksEngine'
   },
   resolve: {
     root: [
