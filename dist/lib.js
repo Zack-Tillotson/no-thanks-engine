@@ -64,7 +64,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "29d7a0f35631387ccab6"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8bef208c95e94c3b4738"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -591,22 +591,29 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _deck2 = _interopRequireDefault(_deck);
 
-	var _player = __webpack_require__(3);
+	var _players = __webpack_require__(3);
 
-	var _player2 = _interopRequireDefault(_player);
+	var _players2 = _interopRequireDefault(_players);
 
 	var _table = __webpack_require__(4);
 
 	var _table2 = _interopRequireDefault(_table);
 
+	function getGameState(deck) {
+	  return {
+	    ongoing: deck.length > 0
+	  };
+	}
+
 	exports['default'] = {
 	  getInitialState: function getInitialState(playerList) {
 
 	    var deck = _deck2['default'].resetDeck();
-	    var players = _player2['default'].resetPlayers(playerList);
+	    var players = _players2['default'].resetPlayers(playerList);
 	    var table = _table2['default'].resetTable();
+	    var game = getGameState(deck);
 
-	    return { deck: deck, players: players, table: table };
+	    return { deck: deck, players: players, table: table, game: game };
 	  },
 
 	  resolveActions: function resolveActions(state, action) {
@@ -614,18 +621,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var card = state.deck.topCard;
 	    var pot = state.table.pot;
 
-	    var players = action === Actions.NoThanks ? _player2['default'].noThanksCard(state.players) : _player2['default'].takeCard(state.players, card, pot);
+	    var players = action === Actions.NoThanks ? _players2['default'].noThanksCard(state.players) : _players2['default'].takeCard(state.players, card, pot);
 
 	    var deck = action === Actions.NoThanks ? state.deck : _deck2['default'].drawCard(state.deck);
 
 	    var table = action === Actions.NoThanks ? _table2['default'].dumpPot(state.table) : _table2['default'].resetPot(state.table);
 
-	    var game = {
-	      ongoing: deck.length > 0
-	    };
+	    var game = getGameState(deck);
 
 	    return { deck: deck, players: players, table: table, game: game };
-	  }
+	  },
+	  __debug__: { Deck: _deck2['default'], Players: _players2['default'], Table: _table2['default'] }
 	};
 	module.exports = exports['default'];
 
@@ -633,9 +639,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 2 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	var MIN_CARD_VALUE = 3;
@@ -652,10 +658,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }).slice(NUMBER_OF_CARDS_LEFT_OUT);
 	}
 
-	exports['default'] = {
+	exports["default"] = {
 	  resetDeck: function resetDeck() {
 	    var deck = buildDeck();
-	    console.log('deck!', deck);
 	    return deck;
 	  },
 	  drawCard: function drawCard(deck) {
@@ -665,7 +670,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return deck;
 	  }
 	};
-	module.exports = exports['default'];
+	module.exports = exports["default"];
 
 /***/ },
 /* 3 */

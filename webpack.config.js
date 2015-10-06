@@ -6,7 +6,6 @@ var buildEnv = process.env.BUILD || 'dev';
 module.exports = {
   entry: {
     lib: './src/index.js'
-    //test: './test.js'
   },
   output: {
     filename: '[name].js',

@@ -1,7 +1,7 @@
 // Engine
 // Should implement pure functions: getInitialState, resolveActions
 import Deck from './deck';
-import Players from './player';
+import Players from './players';
 import Table from './table';
 
 function getGameState(deck) {
@@ -42,5 +42,6 @@ export default {
 
     return {deck, players, table, game};
  
-  }
+  },
+  __debug__: {Deck, Players, Table}
 }

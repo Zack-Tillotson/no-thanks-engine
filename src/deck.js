@@ -15,7 +15,6 @@ function buildDeck() {
 export default {
   resetDeck() {
     const deck = buildDeck();
-    console.log('deck!', deck);
     return deck;
   },
   drawCard(deck) {

@@ -4,8 +4,8 @@
   "description": "Engine for No Thanks! the tabletop game.",
   "main": "index.js",
   "scripts": {
-    "test": "node dist/test.js",
-    "build": "webpack"
+    "test": "node test/index.js",
+    "build": "webpack --config webpack.build.config.js"
   },
   "repository": {
     "type": "git",
