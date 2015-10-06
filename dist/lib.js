@@ -64,7 +64,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a892973000189f52d6b7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0c1475913602611a090e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -693,7 +693,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function resetPlayerList(playerList) {
 	  return playerList.map(function (player) {
-	    return _extends({}, player, { money: STARTING_PLAYER_MONEY, cards: [] });
+	    var money = STARTING_PLAYER_MONEY;
+	    var cards = [];
+	    var score = getCardValue(cards);
+	    return _extends({}, player, { money: money, cards: cards, score: score });
 	  }).sort(function (a, b) {
 	    return Math.random() > .5;
 	  });
@@ -708,8 +711,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return cards.slice(0).sort(function (a, b) {
 	    return b - a;
 	  }).reduce(function (sum, card, index) {
-	    return cards[index] === cards[index - 1] + 1 ? sum : sum + card;
-	  });
+	    return index !== 0 && cards[index] === cards[index - 1] + 1 ? sum : sum + card;
+	  }, 0);
 	}
 
 	function addCard(player, card, pot) {

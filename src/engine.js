@@ -19,10 +19,10 @@ export default {
   getInitialState(playerList) {
 
     const deck = Deck.resetDeck();
-    const players = Players.resetPlayers(playerList)
+    const players = Players.resetPlayers(playerList);
     const table = Table.resetTable();
     const game = getGameState(deck);
-
+    
     return {deck, players, table, game};
 
   },

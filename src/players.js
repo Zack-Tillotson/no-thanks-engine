@@ -4,7 +4,10 @@ const STARTING_PLAYER_MONEY = 11;
 function resetPlayerList(playerList) {
   return playerList
     .map((player) => {
-      return {...player, money: STARTING_PLAYER_MONEY, cards: []}
+      const money = STARTING_PLAYER_MONEY;
+      const cards = [];
+      const score = getCardValue(cards);
+      return {...player, money, cards, score};
     })
     .sort((a,b) => Math.random() > .5);
 }
@@ -19,8 +22,8 @@ function getCardValue(cards) {
     .slice(0)
     .sort((a,b) => b-a)
     .reduce((sum, card, index) => {
-      return cards[index] === cards[index-1] + 1 ? sum : sum + card;
-    });
+      return index !== 0 && cards[index] === cards[index-1] + 1 ? sum : sum + card;
+    }, 0);
 }
 
 function addCard(player, card, pot) {
