@@ -1,2 +1,2 @@
-var Engine = require('./dist/lib.js');
-exports.module = Engine;
+import Engine from './dist/lib.js';
+export default Engine;
