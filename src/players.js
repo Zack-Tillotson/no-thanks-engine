@@ -50,7 +50,7 @@ export default {
     list[players.currentPlayer] = updatedPlayer;
 
     return {
-      currentPlayer: (players.currentPlayer + 1) % list.length,
+      currentPlayer: players.currentPlayer,
       list
     }
   }

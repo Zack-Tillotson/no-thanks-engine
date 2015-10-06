@@ -64,7 +64,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "6bc284b422a97fa61d69"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7963ea2a863aa78318c2"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -740,7 +740,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    list[players.currentPlayer] = updatedPlayer;
 
 	    return {
-	      currentPlayer: (players.currentPlayer + 1) % list.length,
+	      currentPlayer: players.currentPlayer,
 	      list: list
 	    };
 	  }
