@@ -4,14 +4,21 @@ import Deck from './deck';
 import Players from './player';
 import Table from './table';
 
+function getGameState(deck) {
+  return {
+    ongoing: deck.length > 0
+  };
+}
+
 export default {
   getInitialState(playerList) {
 
     const deck = Deck.resetDeck();
     const players = Players.resetPlayers(playerList)
     const table = Table.resetTable();
+    const game = getGameState(deck);
 
-    return {deck, players, table};
+    return {deck, players, table, game};
 
   },
 
@@ -30,9 +37,7 @@ export default {
       ? Table.dumpPot(state.table) 
       : Table.resetPot(state.table);
 
-    const game = {
-      ongoing: deck.length > 0
-    }
+    const game = getGameState(deck);
 
 
     return {deck, players, table, game};
