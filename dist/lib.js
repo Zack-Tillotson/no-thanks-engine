@@ -64,7 +64,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7963ea2a863aa78318c2"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a892973000189f52d6b7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -704,13 +704,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return _extends({}, player, { money: money });
 	}
 
+	function getCardValue(cards) {
+	  return cards.slice(0).sort(function (a, b) {
+	    return b - a;
+	  }).reduce(function (sum, card, index) {
+	    return cards[index] === cards[index - 1] + 1 ? sum : sum + card;
+	  });
+	}
+
 	function addCard(player, card, pot) {
 	  var cards = player.cards.slice(0);
 	  cards.push(card);
 
 	  var money = player.money + pot;
+	  var score = getCardValue(cards) - money;
 
-	  return _extends({}, player, { cards: cards, money: money });
+	  return _extends({}, player, { cards: cards, money: money, score: score });
 	}
 
 	exports["default"] = {
@@ -743,6 +752,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      currentPlayer: players.currentPlayer,
 	      list: list
 	    };
+	  },
+	  __debug__: {
+	    getCardValue: getCardValue
 	  }
 	};
 	module.exports = exports["default"];

@@ -14,13 +14,23 @@ function decrementMoney(player) {
   return {...player, money};
 }
 
+function getCardValue(cards) {
+  return cards
+    .slice(0)
+    .sort((a,b) => b-a)
+    .reduce((sum, card, index) => {
+      return cards[index] === cards[index-1] + 1 ? sum : sum + card;
+    });
+}
+
 function addCard(player, card, pot) {
   const cards = player.cards.slice(0);
   cards.push(card);
 
   const money = player.money + pot;
+  const score = getCardValue(cards) - money;
 
-  return {...player, cards, money}
+  return {...player, cards, money, score}
 }
 
 export default {
@@ -53,5 +63,8 @@ export default {
       currentPlayer: players.currentPlayer,
       list
     }
+  },
+  __debug__: {
+    getCardValue
   }
 }

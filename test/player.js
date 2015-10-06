@@ -28,11 +28,22 @@ describe('Player', function() {
       var money = state.players.list[currentPlayer].money;
 
       var players = Players.takeCard(state.players, card, pot);
-      
+
       assert.equal(players.currentPlayer, currentPlayer, 'current player changed');
       assert.equal(players.list[currentPlayer].cards.length, 1, 'card length not 1');
       assert.equal(players.list[currentPlayer].cards[0], card, 'first card not ' + card);
       assert.equal(players.list[currentPlayer].money, money + pot);
+      assert.equal(-1 * players.list[currentPlayer].money + card, players.list[currentPlayer].score);
+    });
+  });
+  describe('the score roll up', function () {
+    it('should correctly not include the higher valued sequential cards', function() {
+
+      const cards = [5,6,12,13,20];
+      const score = 5+12+20;
+      
+      assert.equal(Players.__debug__.getCardValue(cards), score);
+      
     });
   });
 });
