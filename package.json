@@ -1,6 +1,6 @@
 {
   "name": "no-thanks-engine",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Engine for No Thanks! the tabletop game.",
   "main": "index.js",
   "scripts": {
