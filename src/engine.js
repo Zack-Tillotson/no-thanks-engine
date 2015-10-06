@@ -1,5 +1,5 @@
 // Engine
-// Should implement pure functions: getInitialState, resolveActions
+// Should implement pure functions: getInitialState, resolveAction
 import Deck from './deck';
 import Players from './players';
 import Table from './table';

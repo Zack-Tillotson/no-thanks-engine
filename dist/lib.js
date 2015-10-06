@@ -64,7 +64,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8bef208c95e94c3b4738"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "dc18ef71004df67cea59"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -578,7 +578,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	// Engine
-	// Should implement pure functions: getInitialState, resolveActions
+	// Should implement pure functions: getInitialState, resolveAction
 	'use strict';
 
 	Object.defineProperty(exports, '__esModule', {
@@ -599,6 +599,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _table2 = _interopRequireDefault(_table);
 
+	var Actions = {
+	  NoThanks: 'noThanks',
+	  Take: 'take'
+	};
+
 	function getGameState(deck) {
 	  return {
 	    ongoing: deck.length > 0
@@ -616,7 +621,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return { deck: deck, players: players, table: table, game: game };
 	  },
 
-	  resolveActions: function resolveActions(state, action) {
+	  resolveAction: function resolveAction(state, action) {
 
 	    var card = state.deck.topCard;
 	    var pot = state.table.pot;
