@@ -33,4 +33,21 @@ describe('Engine', function() {
       state = Engine.resolveAction(state, 'noThanks');
     });
   });
+
+  describe('getLegalActions()', function() {
+    it('should return both actions at the beginning of a game', function() {
+      var state = Engine.getInitialState(utils.getPlayerList());
+      const actions = Engine.getLegalActions(state);
+      assert.equal(actions.length, 2);
+      assert(actions[0] === 'noThanks' || actions[1] === 'noThanks');
+      assert(actions[0] === 'take' || actions[1] === 'take');
+    });
+    it('should only return take when the current player is out of money', function() {
+      var state = Engine.getInitialState(utils.getPlayerList());
+      state.players.list[state.players.currentPlayer].money = 0;
+      const actions = Engine.getLegalActions(state);
+      assert.equal(actions.length, 1);
+      assert(actions[0] === 'take');
+    });
+  });
 });

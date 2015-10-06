@@ -64,7 +64,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d3129469cb047e6f47c7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b4e4e56eea42591d4247"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -610,6 +610,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 	}
 
+	function getLegalActions(state) {
+	  var ret = [Actions.Take];
+	  if (state.players.list[state.players.currentPlayer].money > 0) {
+	    ret.push(Actions.NoThanks);
+	  }
+	  return ret;
+	}
+
 	exports['default'] = {
 	  getInitialState: function getInitialState(playerList) {
 
@@ -621,7 +629,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return { deck: deck, players: players, table: table, game: game };
 	  },
 
+	  getLegalActions: getLegalActions,
+
 	  resolveAction: function resolveAction(state, action) {
+
+	    if (getLegalActions(state).indexOf(action) === -1) {
+	      throw "Attempted to take illegal action '" + action + "', legal actions are " + getLegalActions(state).toString();
+	    }
 
 	    var card = state.deck[0];
 	    var pot = state.table.pot;

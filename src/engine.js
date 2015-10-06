@@ -15,6 +15,14 @@ function getGameState(deck) {
   };
 }
 
+function getLegalActions(state) {
+  const ret = [Actions.Take];
+  if(state.players.list[state.players.currentPlayer].money > 0) {
+    ret.push(Actions.NoThanks);
+  }
+  return ret;
+}
+
 export default {
   getInitialState(playerList) {
 
@@ -27,7 +35,14 @@ export default {
 
   },
 
+  getLegalActions,
+
   resolveAction(state, action) {
+
+    if(getLegalActions(state).indexOf(action) === -1) {
+      throw "Attempted to take illegal action '" + action 
+        + "', legal actions are " + getLegalActions(state).toString();
+    }
 
     const card = state.deck[0];
     const pot = state.table.pot;
