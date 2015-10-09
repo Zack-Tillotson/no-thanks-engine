@@ -35,6 +35,19 @@ describe('Player', function() {
       assert.equal(players.list[currentPlayer].money, money + pot);
       assert.equal(-1 * players.list[currentPlayer].money + card, players.list[currentPlayer].score);
     });
+    it('should have the player with alist of cards if they take several', function() {
+
+      var state = Engine.getInitialState(utils.getPlayerList());
+      var currentPlayer = state.players.currentPlayer;
+      var money = state.players.list[currentPlayer].money;
+
+      var players = Players.takeCard(state.players, 17, 3);
+      players = Players.takeCard(players, 20, 0);
+
+      assert.equal(players.currentPlayer, currentPlayer, 'current player changed');
+      assert.equal(players.list[currentPlayer].cards.length, 2, 'card length not 1');
+      assert.equal(37 - 3 - 11, players.list[currentPlayer].score);
+    });
   });
   describe('the score roll up', function () {
     it('should correctly not include the higher valued sequential cards', function() {
