@@ -26,4 +26,15 @@ describe('Deck', function() {
     deck = Deck.drawCard(deck);
     assert.equal(deck.length, 0);
   });
+  it('should return a totally new array to fix mutability problems', function() {
+    var a = {a: 1};
+    var b = {b: 2};
+    var ary = [a,b];
+    var ary2 = Deck.drawCard(ary);
+    assert.equal(ary2.length, 1);
+    assert.equal(ary.length, 2);
+    ary2.pop();
+    assert.equal(ary2.length, 0);
+    assert.equal(ary.length, 2);
+  })
 });
