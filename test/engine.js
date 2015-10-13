@@ -24,20 +24,20 @@ describe('Engine', function() {
   describe('resolveAction()', function() {
     it('should be callable with a take action', function() {
       var state = Engine.getInitialState(utils.getPlayerList());
-      state = Engine.resolveAction(state, 'take');
+      state = Engine.__debug__.Engine.resolveAction(state, 'take');
       assert(state.players.list[0].score > -1); // Breaks on NaN
       assert(state.players.list[1].score > -1);
     });
     it('should be callable with a no thanks action', function() {
       var state = Engine.getInitialState(utils.getPlayerList());
-      state = Engine.resolveAction(state, 'noThanks');
+      state = Engine.__debug__.Engine.resolveAction(state, 'noThanks');
     });
   });
 
   describe('getLegalActions()', function() {
     it('should return both actions at the beginning of a game', function() {
       var state = Engine.getInitialState(utils.getPlayerList());
-      const actions = Engine.getLegalActions(state);
+      const actions = Engine.__debug__.Engine.getLegalActions(state);
       assert.equal(actions.length, 2);
       assert(actions[0] === 'noThanks' || actions[1] === 'noThanks');
       assert(actions[0] === 'take' || actions[1] === 'take');
@@ -45,9 +45,26 @@ describe('Engine', function() {
     it('should only return take when the current player is out of money', function() {
       var state = Engine.getInitialState(utils.getPlayerList());
       state.players.list[state.players.currentPlayer].money = 0;
-      const actions = Engine.getLegalActions(state);
+      const actions = Engine.__debug__.Engine.getLegalActions(state);
       assert.equal(actions.length, 1);
       assert(actions[0] === 'take');
+    });
+  });
+
+  describe('getActionOptions()', function() {
+    it('should return both actions at the beginning of a game', function() {
+      var state = Engine.getInitialState(utils.getPlayerList());
+      const actions = Engine.getActionOptions(state);
+      assert.equal(actions.length, 2);
+      assert(actions[0].action === 'noThanks' || actions[1].action === 'noThanks');
+      assert(actions[0].action === 'take' || actions[1].action === 'take');
+    });
+    it('should only return take when the current player is out of money', function() {
+      var state = Engine.getInitialState(utils.getPlayerList());
+      state.players.list[state.players.currentPlayer].money = 0;
+      const actions = Engine.getActionOptions(state);
+      assert.equal(actions.length, 1);
+      assert(actions[0].action === 'take');
     });
   });
 });

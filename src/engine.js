@@ -1,5 +1,5 @@
 // Engine
-// Should implement pure functions: getInitialState, resolveAction
+// Should implement pure functions: getInitialState, getActionOptions
 import Deck from './deck';
 import Players from './players';
 import Table from './table';
@@ -8,6 +8,17 @@ const Actions = {
   NoThanks: 'noThanks',
   Take: 'take'
 };
+
+function getInitialState(playerList) {
+
+  const deck = Deck.resetDeck();
+  const players = Players.resetPlayers(playerList);
+  const table = Table.resetTable();
+  const game = getGameState(deck);
+  
+  return {deck, players, table, game};
+
+}
 
 function getGameState(deck) {
   return {
@@ -23,45 +34,41 @@ function getLegalActions(state) {
   return ret;
 }
 
+// Returns list of actions and game state that would result
+function getActionOptions(state) {
+  const actions = getLegalActions(state);
+  return actions.map((action) => {
+    return {
+      action, state: resolveAction(state, action)
+    };
+  })
+}
+
+function resolveAction(state, action) {
+
+  const card = state.deck[0];
+  const pot = state.table.pot;
+
+  const players = (action === Actions.NoThanks)
+    ? Players.noThanksCard(state.players)
+    : Players.takeCard(state.players, card, pot);
+
+  const deck = (action === Actions.NoThanks) ? state.deck : Deck.drawCard(state.deck);
+
+  const table = (action === Actions.NoThanks) 
+    ? Table.bumpPot(state.table) 
+    : Table.takePot(state.table);
+
+  const game = getGameState(deck);
+
+  return {deck, players, table, game};
+
+}
+
+const Engine = {getLegalActions, resolveAction};
+
 export default {
-  getInitialState(playerList) {
-
-    const deck = Deck.resetDeck();
-    const players = Players.resetPlayers(playerList);
-    const table = Table.resetTable();
-    const game = getGameState(deck);
-    
-    return {deck, players, table, game};
-
-  },
-
-  getLegalActions,
-
-  resolveAction(state, action) {
-
-    if(getLegalActions(state).indexOf(action) === -1) {
-      throw "Attempted to take illegal action '" + action 
-        + "', legal actions are " + getLegalActions(state).toString();
-    }
-
-    const card = state.deck[0];
-    const pot = state.table.pot;
-
-    const players = (action === Actions.NoThanks)
-      ? Players.noThanksCard(state.players)
-      : Players.takeCard(state.players, card, pot);
-
-    const deck = (action === Actions.NoThanks) ? state.deck : Deck.drawCard(state.deck);
-
-    const table = (action === Actions.NoThanks) 
-      ? Table.bumpPot(state.table) 
-      : Table.takePot(state.table);
-
-    const game = getGameState(deck);
-
-
-    return {deck, players, table, game};
- 
-  },
-  __debug__: {Deck, Players, Table}
+  getInitialState, 
+  getActionOptions,
+  __debug__: {Engine, Deck, Players, Table}
 }

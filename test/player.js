@@ -35,7 +35,7 @@ describe('Player', function() {
       assert.equal(players.list[currentPlayer].money, money + pot);
       assert.equal(-1 * players.list[currentPlayer].money + card, players.list[currentPlayer].score);
     });
-    it('should have the player with alist of cards if they take several', function() {
+    it('should have the player with a list of cards if they take several', function() {
 
       var state = Engine.getInitialState(utils.getPlayerList());
       var currentPlayer = state.players.currentPlayer;

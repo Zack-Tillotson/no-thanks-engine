@@ -64,7 +64,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b4e4e56eea42591d4247"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "fff2ed8cc4fa579f6630"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -578,7 +578,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	// Engine
-	// Should implement pure functions: getInitialState, resolveAction
+	// Should implement pure functions: getInitialState, getActionOptions
 	'use strict';
 
 	Object.defineProperty(exports, '__esModule', {
@@ -604,6 +604,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  Take: 'take'
 	};
 
+	function getInitialState(playerList) {
+
+	  var deck = _deck2['default'].resetDeck();
+	  var players = _players2['default'].resetPlayers(playerList);
+	  var table = _table2['default'].resetTable();
+	  var game = getGameState(deck);
+
+	  return { deck: deck, players: players, table: table, game: game };
+	}
+
 	function getGameState(deck) {
 	  return {
 	    ongoing: deck.length > 0
@@ -618,39 +628,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return ret;
 	}
 
+	// Returns list of actions and game state that would result
+	function getActionOptions(state) {
+	  var actions = getLegalActions(state);
+	  return actions.map(function (action) {
+	    return {
+	      action: action, state: resolveAction(state, action)
+	    };
+	  });
+	}
+
+	function resolveAction(state, action) {
+
+	  var card = state.deck[0];
+	  var pot = state.table.pot;
+
+	  var players = action === Actions.NoThanks ? _players2['default'].noThanksCard(state.players) : _players2['default'].takeCard(state.players, card, pot);
+
+	  var deck = action === Actions.NoThanks ? state.deck : _deck2['default'].drawCard(state.deck);
+
+	  var table = action === Actions.NoThanks ? _table2['default'].bumpPot(state.table) : _table2['default'].takePot(state.table);
+
+	  var game = getGameState(deck);
+
+	  return { deck: deck, players: players, table: table, game: game };
+	}
+
+	var Engine = { getLegalActions: getLegalActions, resolveAction: resolveAction };
+
 	exports['default'] = {
-	  getInitialState: function getInitialState(playerList) {
-
-	    var deck = _deck2['default'].resetDeck();
-	    var players = _players2['default'].resetPlayers(playerList);
-	    var table = _table2['default'].resetTable();
-	    var game = getGameState(deck);
-
-	    return { deck: deck, players: players, table: table, game: game };
-	  },
-
-	  getLegalActions: getLegalActions,
-
-	  resolveAction: function resolveAction(state, action) {
-
-	    if (getLegalActions(state).indexOf(action) === -1) {
-	      throw "Attempted to take illegal action '" + action + "', legal actions are " + getLegalActions(state).toString();
-	    }
-
-	    var card = state.deck[0];
-	    var pot = state.table.pot;
-
-	    var players = action === Actions.NoThanks ? _players2['default'].noThanksCard(state.players) : _players2['default'].takeCard(state.players, card, pot);
-
-	    var deck = action === Actions.NoThanks ? state.deck : _deck2['default'].drawCard(state.deck);
-
-	    var table = action === Actions.NoThanks ? _table2['default'].bumpPot(state.table) : _table2['default'].takePot(state.table);
-
-	    var game = getGameState(deck);
-
-	    return { deck: deck, players: players, table: table, game: game };
-	  },
-	  __debug__: { Deck: _deck2['default'], Players: _players2['default'], Table: _table2['default'] }
+	  getInitialState: getInitialState,
+	  getActionOptions: getActionOptions,
+	  __debug__: { Engine: Engine, Deck: _deck2['default'], Players: _players2['default'], Table: _table2['default'] }
 	};
 	module.exports = exports['default'];
 
@@ -758,6 +767,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      list: list
 	    };
 	  },
+
 	  takeCard: function takeCard(players, card, pot) {
 	    var list = players.list.slice(0);
 	    var currentPlayer = list[players.currentPlayer];
