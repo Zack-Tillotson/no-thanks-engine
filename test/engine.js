@@ -65,6 +65,7 @@ describe('Engine', function() {
       const actions = Engine.getActionOptions(state);
       assert.equal(actions.length, 1);
       assert(actions[0].action === 'take');
+      assert(actions[0].state.deck != state.deck[0]);
     });
   });
 });

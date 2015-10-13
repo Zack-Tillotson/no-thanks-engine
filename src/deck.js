@@ -18,6 +18,7 @@ export default {
     return deck;
   },
   drawCard(deck) {
+    deck = deck.slice(0);
     if(deck.length > 0) {
       deck.shift();
     }

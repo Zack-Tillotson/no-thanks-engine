@@ -64,7 +64,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "fff2ed8cc4fa579f6630"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "02d1decef3e9f31c9ca2"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -692,6 +692,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return deck;
 	  },
 	  drawCard: function drawCard(deck) {
+	    deck = deck.slice(0);
 	    if (deck.length > 0) {
 	      deck.shift();
 	    }
