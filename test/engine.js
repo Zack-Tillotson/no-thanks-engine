@@ -59,25 +59,4 @@ describe('Engine', function() {
 
   });
 
-  describe('getActionOptions()', function() {
-
-    it('should return both actions at the beginning of a game', function() {
-      var state = Engine.getInitialState(utils.getPlayerList());
-      const actions = Engine.getActionOptions(state);
-      assert.equal(actions.length, 2);
-      assert(actions[0].action === 'noThanks' || actions[1].action === 'noThanks');
-      assert(actions[0].action === 'take' || actions[1].action === 'take');
-    });
-
-    it('should only return take when the current player is out of money', function() {
-      var state = Engine.getInitialState(utils.getPlayerList());
-      state.players.list[state.players.currentPlayer].money = 0;
-      const actions = Engine.getActionOptions(state);
-      assert.equal(actions.length, 1);
-      assert(actions[0].action === 'take');
-      assert(actions[0].state.deck != state.deck[0]);
-    });
-
-  });
-
 });

@@ -64,7 +64,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "37b5611ef324d8e1870a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0f544abbec2142e0788a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -628,16 +628,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return ret;
 	}
 
-	// Returns list of actions and game state that would result
-	function getActionOptions(state) {
-	  var actions = getLegalActions(state);
-	  return actions.map(function (action) {
-	    return {
-	      action: action, state: resolveAction(state, action)
-	    };
-	  });
-	}
-
 	function resolveAction(state, action) {
 
 	  var card = state.deck[0];
@@ -658,7 +648,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports['default'] = {
 	  getInitialState: getInitialState,
-	  getActionOptions: getActionOptions,
+	  getLegalActions: getLegalActions,
 	  __debug__: { Engine: Engine, Deck: _deck2['default'], Players: _players2['default'], Table: _table2['default'] }
 	};
 	module.exports = exports['default'];

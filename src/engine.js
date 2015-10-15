@@ -34,16 +34,6 @@ function getLegalActions(state) {
   return ret;
 }
 
-// Returns list of actions and game state that would result
-function getActionOptions(state) {
-  const actions = getLegalActions(state);
-  return actions.map((action) => {
-    return {
-      action, state: resolveAction(state, action)
-    };
-  })
-}
-
 function resolveAction(state, action) {
 
   const card = state.deck[0];
@@ -69,6 +59,6 @@ const Engine = {getLegalActions, resolveAction};
 
 export default {
   getInitialState, 
-  getActionOptions,
+  getLegalActions,
   __debug__: {Engine, Deck, Players, Table}
 }
