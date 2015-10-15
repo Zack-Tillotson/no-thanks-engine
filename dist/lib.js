@@ -64,7 +64,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "32b9883fac2c869e142a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "37b5611ef324d8e1870a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -719,7 +719,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return playerList.map(function (player) {
 	    var money = STARTING_PLAYER_MONEY;
 	    var cards = [];
-	    var score = getCardValue(cards);
+	    var score = getCardValue(cards) - money;
 	    return _extends({}, player, { money: money, cards: cards, score: score });
 	  }).sort(function (a, b) {
 	    return Math.random() > .5;
@@ -728,7 +728,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function decrementMoney(player) {
 	  var money = player.money - 1;
-	  var score = getCardValue(cards) - money;
+	  var score = getCardValue(player.cards) - money;
 	  return _extends({}, player, { money: money, score: score });
 	}
 
@@ -758,6 +758,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	  },
 	  noThanksCard: function noThanksCard(players) {
+
 	    var list = players.list.slice(0);
 	    var currentPlayer = list[players.currentPlayer];
 

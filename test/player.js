@@ -5,18 +5,23 @@ var utils = require('./utils.js');
 var Players = Engine.__debug__.Players;
 
 describe('Player', function() {
+
   describe('noThanksCard', function () {
     it('should take money from the current player and not give them a card', function() {
       var state = Engine.getInitialState(utils.getPlayerList());
       var currentPlayer = state.players.currentPlayer;
       var money = state.players.list[currentPlayer].money;
+      var score = state.players.list[currentPlayer].score;
 
       var players = Players.noThanksCard(state.players);
-      assert.equal(players.currentPlayer, (currentPlayer + 1) % players.list.length);
-      assert.equal(players.list[currentPlayer].cards.length, 0);
-      assert.equal(players.list[currentPlayer].money, money - 1);
+      assert.equal(players.currentPlayer, (currentPlayer + 1) % players.list.length, 
+        'wrong current player');
+      assert.equal(players.list[currentPlayer].cards.length, 0, 'wrongly got a card');
+      assert.equal(players.list[currentPlayer].money, money - 1, 'money is wrong');
+      assert.equal(players.list[currentPlayer].score, score + 1, 'score is wrong');
     });
   });
+
   describe('takeCard', function () {
     it('should give them the money from the pot and give them a card', function() {
 
@@ -49,6 +54,7 @@ describe('Player', function() {
       assert.equal(37 - 3 - 11, players.list[currentPlayer].score);
     });
   });
+
   describe('the score roll up', function () {
     it('should correctly not include the higher valued sequential cards', function() {
 

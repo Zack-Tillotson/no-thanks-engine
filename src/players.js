@@ -6,7 +6,7 @@ function resetPlayerList(playerList) {
     .map((player) => {
       const money = STARTING_PLAYER_MONEY;
       const cards = [];
-      const score = getCardValue(cards);
+      const score = getCardValue(cards) - money;
       return {...player, money, cards, score};
     })
     .sort((a,b) => Math.random() > .5);
@@ -14,7 +14,7 @@ function resetPlayerList(playerList) {
 
 function decrementMoney(player) {
   const money = player.money - 1;
-  const score = getCardValue(cards) - money;
+  const score = getCardValue(player.cards) - money;
   return {...player, money, score};
 }
 
@@ -45,6 +45,7 @@ export default {
     }
   },
   noThanksCard(players) {
+
     const list = players.list.slice(0);
     const currentPlayer = list[players.currentPlayer];
 

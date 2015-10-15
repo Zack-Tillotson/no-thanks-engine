@@ -3,11 +3,14 @@ var Engine = require('../dist/lib.js');
 var utils = require('./utils.js');
 
 describe('Engine', function() {
+
   describe('getInitialState()', function () {
+
     it('the deck should initially have 23 cards in it', function () {
       var deck = Engine.getInitialState(utils.getPlayerList()).deck;
       assert.equal(deck.length, 24);
     });
+
     it('the deck should not have duplicates', function () {
       var deck = Engine.getInitialState(utils.getPlayerList()).deck;
       var numbers = {};
@@ -19,14 +22,16 @@ describe('Engine', function() {
         }
       }
       assert(!foundDuplicate);
+
     });
   });
+
   describe('resolveAction()', function() {
     it('should be callable with a take action', function() {
       var state = Engine.getInitialState(utils.getPlayerList());
       state = Engine.__debug__.Engine.resolveAction(state, 'take');
-      assert(state.players.list[0].score > -1); // Breaks on NaN
-      assert(state.players.list[1].score > -1);
+      assert(!Number.isNaN(state.players.list[0].score)); // Breaks on NaN
+      assert(!Number.isNaN(state.players.list[1].score));
     });
     it('should be callable with a no thanks action', function() {
       var state = Engine.getInitialState(utils.getPlayerList());
@@ -35,6 +40,7 @@ describe('Engine', function() {
   });
 
   describe('getLegalActions()', function() {
+
     it('should return both actions at the beginning of a game', function() {
       var state = Engine.getInitialState(utils.getPlayerList());
       const actions = Engine.__debug__.Engine.getLegalActions(state);
@@ -42,6 +48,7 @@ describe('Engine', function() {
       assert(actions[0] === 'noThanks' || actions[1] === 'noThanks');
       assert(actions[0] === 'take' || actions[1] === 'take');
     });
+
     it('should only return take when the current player is out of money', function() {
       var state = Engine.getInitialState(utils.getPlayerList());
       state.players.list[state.players.currentPlayer].money = 0;
@@ -49,9 +56,11 @@ describe('Engine', function() {
       assert.equal(actions.length, 1);
       assert(actions[0] === 'take');
     });
+
   });
 
   describe('getActionOptions()', function() {
+
     it('should return both actions at the beginning of a game', function() {
       var state = Engine.getInitialState(utils.getPlayerList());
       const actions = Engine.getActionOptions(state);
@@ -59,6 +68,7 @@ describe('Engine', function() {
       assert(actions[0].action === 'noThanks' || actions[1].action === 'noThanks');
       assert(actions[0].action === 'take' || actions[1].action === 'take');
     });
+
     it('should only return take when the current player is out of money', function() {
       var state = Engine.getInitialState(utils.getPlayerList());
       state.players.list[state.players.currentPlayer].money = 0;
@@ -67,5 +77,7 @@ describe('Engine', function() {
       assert(actions[0].action === 'take');
       assert(actions[0].state.deck != state.deck[0]);
     });
+
   });
+
 });
