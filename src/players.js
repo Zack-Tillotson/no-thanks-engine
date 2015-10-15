@@ -14,7 +14,8 @@ function resetPlayerList(playerList) {
 
 function decrementMoney(player) {
   const money = player.money - 1;
-  return {...player, money};
+  const score = getCardValue(cards) - money;
+  return {...player, money, score};
 }
 
 function getCardValue(cards) {
