@@ -43,7 +43,6 @@ export default {
       currentPlayer: parseInt(Math.random() * playerList.length),
       list: resetPlayerList(playerList)
     }
-    
   },
   noThanksCard(players) {
     const list = players.list.slice(0);

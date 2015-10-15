@@ -64,7 +64,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "02d1decef3e9f31c9ca2"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "32b9883fac2c869e142a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -728,7 +728,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function decrementMoney(player) {
 	  var money = player.money - 1;
-	  return _extends({}, player, { money: money });
+	  var score = getCardValue(cards) - money;
+	  return _extends({}, player, { money: money, score: score });
 	}
 
 	function getCardValue(cards) {
