@@ -64,7 +64,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0f544abbec2142e0788a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "4857bd954af4588c32ed"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -649,6 +649,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports['default'] = {
 	  getInitialState: getInitialState,
 	  getLegalActions: getLegalActions,
+	  resolveAction: resolveAction,
 	  __debug__: { Engine: Engine, Deck: _deck2['default'], Players: _players2['default'], Table: _table2['default'] }
 	};
 	module.exports = exports['default'];

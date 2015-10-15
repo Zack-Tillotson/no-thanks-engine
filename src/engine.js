@@ -60,5 +60,6 @@ const Engine = {getLegalActions, resolveAction};
 export default {
   getInitialState, 
   getLegalActions,
+  resolveAction,
   __debug__: {Engine, Deck, Players, Table}
 }
