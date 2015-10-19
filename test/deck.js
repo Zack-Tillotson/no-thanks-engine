@@ -5,6 +5,7 @@ var utils = require('./utils.js');
 var Deck = Engine.__debug__.Deck;
 
 describe('Deck', function() {
+
   it('should lose the top card after each draw', function () {
     var deck = [1,2,3,4,5];
     var length = 5
@@ -13,6 +14,7 @@ describe('Deck', function() {
     assert.equal(length, deck.length + 1);
     assert.equal(nextTopCard, deck[0]);
   });
+
   it('should not be able to draw past the last card', function () {
     var deck = [1,2,3,4,5];
     var cardsDrawn = 0;
@@ -36,5 +38,6 @@ describe('Deck', function() {
     ary2.pop();
     assert.equal(ary2.length, 0);
     assert.equal(ary.length, 2);
-  })
+  });
+
 });

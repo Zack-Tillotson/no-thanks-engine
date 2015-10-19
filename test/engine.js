@@ -24,6 +24,23 @@ describe('Engine', function() {
       assert(!foundDuplicate);
 
     });
+
+
+    it('should have game.ongoing be true until the deck is empty', function() {
+      var gameState = Engine.getInitialState(utils.getPlayerList());
+
+      var initialDeckSize = gameState.deck.length;
+      var drawnCards = 0;
+      while(gameState.game.ongoing && drawnCards < 9999) {
+        gameState = Engine.resolveAction(gameState, 'take');
+        drawnCards++;
+      }
+      
+      assert.equal(initialDeckSize, drawnCards);
+      assert(!gameState.game.ongoing);
+      
+    });
+
   });
 
   describe('resolveAction()', function() {
